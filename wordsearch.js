@@ -1,26 +1,31 @@
-
-
 const wordSearch = (letters, word) => {
+  let a = word.split("");
+  a = a.reverse();
+  a = a.join('');
+
+
+  if (letters.length == 0) return false;
+  let b = transpose(letters)
+  if (!Array.isArray(letters[0])) {
+    let c = letters.join("")
+    if (c.includes(word) || c.includes(a)) return true;
+    return false
+  }
+  if (!Array.isArray(b[0])){
+    let d = b.join("")
+    if (d.includes(word) || c.includes(d)) return true;
+    return false
+  }
   const horizontalJoin = letters.map(ls => ls.join(''));
   for (let l of horizontalJoin) {
-    if (l.includes(word)) return true;
-    let a = word.split("");
-    a = a.reverse();
-    a = a.join();
-    if (l.includes(a)) return true;
-  }
-    
-  let b = transpose(letters);
-    
+    if (l.includes(word) || l.includes(a)) return true;
+
+  } 
   const VerticalJoin = b.map(ls => ls.join(''));
   for (let l of VerticalJoin) {
-    if (l.includes(word)) return true;
-    let b = word.split("");
-    b = b.reverse();
-    b = b.join();
-    if (l.includes(b)) return true;
+    if (l.includes(word) || l.includes(a)) return true;
   }
-    
+
   return false;
 
 };
@@ -37,8 +42,8 @@ const transpose = function(matrix) {
       a[k].push(0);
     }
   }
-  
-  
+
+
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
       a[j][i] = matrix[i][j];
@@ -46,35 +51,17 @@ const transpose = function(matrix) {
   }
   return a;
 };
-  
 
-// Do not edit this function.
-const printMatrix = (matrix) => {
-  for (const row of matrix) {
-    for (const el of row) {
-      process.stdout.write(el + " ");
-    }
-    process.stdout.write('\n');
-  }
-};
+console.log(wordSearch([
+  ['A', 'W', 'C', 'F', 'Q', 'U', 'A', 'L'],
+  ['S', 'E', 'I', 'N', 'F', 'E', 'L', 'D'],
+  ['Y', 'F', 'C', 'F', 'Q', 'U', 'A', 'L'],
+  ['H', 'M', 'J', 'T', 'E', 'V', 'R', 'G'],
+  ['W', 'H', 'C', 'S', 'Y', 'E', 'R', 'L'],
+  ['B', 'F', 'R', 'E', 'N', 'E', 'Y', 'B'],
+  ['U', 'B', 'T', 'W', 'A', 'P', 'A', 'I'],
+  ['O', 'D', 'C', 'A', 'K', 'U', 'A', 'S'],
+  ['E', 'Z', 'K', 'F', 'Q', 'U', 'A', 'L'],
+], 'AAAYRR'))
 
-printMatrix(transpose([
-  [1, 2, 3, 4],
-  [1, 2, 3, 4],
-  [1, 2, 3, 4],
-  [1, 2, 3, 4]
-]));
-  
-console.log('----');
-  
-printMatrix(transpose([
-  [1, 2],
-  [3, 4],
-  [5, 6]
-]));
-  
-console.log('----');
-  
-printMatrix(transpose([
-  [1, 2, 3, 4, 5, 6, 7]
-]));
+module.exports = wordSearch
